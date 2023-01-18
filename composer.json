@@ -1,0 +1,34 @@
+{
+  "name": "liondeer/framework",
+  "description": "Testing Bundles",
+  "license": "MIT",
+  "type": "symfony-bundle",
+  "require": {
+    "php": ">=8.1",
+    "symfony/framework-bundle": "^6.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Liondeer\\Framework\\": "src/"
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Liondeer\\Framework\\Tests\\": "tests/"
+    }
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "L & D - Lion & Deer GmbH",
+      "email": "support@liondeer.de"
+    },
+    {
+      "name": "Liondeer Community",
+      "homepage": "https://github.com/orgs/LionAndDeer/people"
+    }
+  ]
+}
