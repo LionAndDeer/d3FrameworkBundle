@@ -30,13 +30,5 @@
       "name": "Liondeer Community",
       "homepage": "https://github.com/orgs/LionAndDeer/people"
     }
-  ],
-  "extra": {
-    "symfony": {
-      "endpoint": [
-        "https://github.com/LionAndDeer/recipes",
-        "flex://defaults"
-      ]
-    }
-  }
+  ]
 }
