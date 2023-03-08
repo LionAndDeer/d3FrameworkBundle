@@ -1,6 +1,6 @@
 {
   "name": "liondeer/framework",
-  "description": "Testing Bundles",
+  "description": "L&D - Lion and Deer GmbH Framework for d.velop ECM",
   "license": "MIT",
   "type": "symfony-bundle",
   "require": {
