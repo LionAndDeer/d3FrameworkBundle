@@ -31,5 +31,10 @@
       "name": "Liondeer Community",
       "homepage": "https://github.com/orgs/LionAndDeer/people"
     }
-  ]
+  ],
+  "config": {
+    "allow-plugins": {
+      "symfony/flex": true
+    }
+  }
 }
