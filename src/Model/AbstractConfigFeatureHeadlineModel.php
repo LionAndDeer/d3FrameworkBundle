@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Liondeer\Model;
+namespace Liondeer\Framework\Model;
 
 
 use JetBrains\PhpStorm\ArrayShape;
