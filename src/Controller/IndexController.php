@@ -9,7 +9,6 @@ use Liondeer\Model\AbstractConfigFeatureHeadlineModel;
 use Liondeer\Model\DmsExtensionModel;
 use Liondeer\Model\FeatureModel;
 use ReflectionClass;
-use Swagger\Annotations as SWG;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
