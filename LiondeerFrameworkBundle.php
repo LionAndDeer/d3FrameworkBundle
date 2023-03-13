@@ -1,9 +1,9 @@
 <?php
+namespace Liondeer\Framework;
 
+use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-use Symfony\Component\HttpKernel\Bundle\Bundle;
-
-class LiondeerFrameworkBundle extends Bundle
+class LiondeerFrameworkBundle extends AbstractBundle
 {
     public function getPath(): string
     {
