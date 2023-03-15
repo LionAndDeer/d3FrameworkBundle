@@ -1,0 +1,27 @@
+services:
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true
+
+#  vendor\liondeer\framework\src\Controller\:
+#    public: true
+#    tags: ['controller.service_arguments']
+#    resource: '%kernel.project_dir%/vendor/liondeer/framework/src/Controller/IndexController.php'
+
+  Liondeer\Framework\Controller\:
+    public: true
+    tags: ['controller.service_arguments']
+    resource: '%kernel.project_dir%/vendor/liondeer/framework/src/Controller'
+
+  Liondeer\Framework\:
+    public: true
+    resource: '%kernel.project_dir%/vendor/liondeer/framework/src/'
+    exclude:
+      - '%kernel.project_dir%/vendor/liondeer/framework/src/Controller/'
+      - '%kernel.project_dir%/vendor/liondeer/framework/src/DependencyInjection/'
+      - '%kernel.project_dir%/vendor/liondeer/framework/src/Ressources/'
+      - '%kernel.project_dir%/vendor/liondeer/framework/src/LiondeerFrameworkBundle.php'
+#      - '%kernel.project_dir%/vendor/liondeer/framework/src/Model/AbstractConfigFeatureHeadlineInterface.php'
