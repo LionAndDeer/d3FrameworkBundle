@@ -15,7 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route('/%d3_app_name%')]
 class IndexController extends AbstractController
 {
     /** @var AbstractFeatureController[] */

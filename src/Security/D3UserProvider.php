@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /** @codeCoverageIgnore */
-class UserProvider implements UserProviderInterface
+class D3UserProvider implements UserProviderInterface
 {
     public function __construct(
         private UserHelper $userHelper

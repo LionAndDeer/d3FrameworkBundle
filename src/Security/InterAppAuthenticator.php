@@ -20,7 +20,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 
-class InterAppD3ecmAuthenticator extends AbstractAuthenticator
+class InterAppAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
         private ParameterBagInterface $params,

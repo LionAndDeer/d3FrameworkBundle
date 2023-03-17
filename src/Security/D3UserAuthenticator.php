@@ -22,10 +22,10 @@ use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 
-class D3ecmAuthenticator extends AbstractAuthenticator
+class D3UserAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
-        private UserProvider $userProvider,
+        private D3UserProvider        $userProvider,
         private ParameterBagInterface $params
     ) {
     }
