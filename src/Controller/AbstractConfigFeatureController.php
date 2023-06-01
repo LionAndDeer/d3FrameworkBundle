@@ -28,7 +28,7 @@ abstract class AbstractConfigFeatureController
      */
     protected function generateConfigFeatureModel(int $order): ConfigFeatureModel
     {
-        $this->configFeatureModel = new ConfigFeatureModel($order, $this->translator);
+        $this->configFeatureModel = new ConfigFeatureModel($this->translator,$order);
         return $this->configFeatureModel;
     }
 }

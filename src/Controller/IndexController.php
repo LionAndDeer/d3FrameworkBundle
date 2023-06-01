@@ -8,6 +8,9 @@ use Liondeer\Framework\Exception\LiondeerD3FrameworkException;
 use Liondeer\Framework\Model\AbstractConfigFeatureHeadlineModel;
 use Liondeer\Framework\Model\DmsExtensionModel;
 use Liondeer\Framework\Model\FeatureModel;
+use Liondeer\Framework\Model\SourceCategoryModel;
+use Liondeer\Framework\Model\SourceModel;
+use Liondeer\Framework\Model\SourcePropertyModel;
 use ReflectionClass;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -23,15 +26,19 @@ class IndexController extends AbstractController
     private array $configFeatureControllers;
     /** @var AbstractDmsObjectExtensionController[] */
     private array $dmsObjectExtensionControllers;
+    /** @var AbstractSourceController[] */
+    private array $sourceControllers;
 
     #[Pure]
     public function __construct(
-        ControllerRegistrator $controllerRegistrator,
+        ControllerRegistrator       $controllerRegistrator,
         private TranslatorInterface $translator
-    ) {
+    )
+    {
         $this->featureControllers = $controllerRegistrator->getFeatureControllers();
         $this->configFeatureControllers = $controllerRegistrator->getConfigFeatureControllers();
         $this->dmsObjectExtensionControllers = $controllerRegistrator->getDmsObjectExtensionControllers();
+        $this->sourceControllers = $controllerRegistrator->getSourceControllers();
     }
 
     #[Route(
@@ -54,7 +61,10 @@ class IndexController extends AbstractController
                     ],
                     "dmsObjectExtensions" => [
                         "href" => $this->generateUrl("dmsObjectExtensions"),
-                    ]
+                    ],
+                    "sources" => [
+                        "href" => $this->generateUrl("sources"),
+                    ],
                 ]
             ]
         );
@@ -172,6 +182,24 @@ class IndexController extends AbstractController
             ]
         );
 
+        $response->setEncodingOptions(JSON_UNESCAPED_SLASHES);
+
+        return $response;
+    }
+
+    #[Route("/sources", name: "sources", methods: ['GET'])]
+    public function sources(): JsonResponse
+    {
+        $sources =  [];
+        foreach ($this->sourceControllers as $sourceController) {
+            $sources[] = $sourceController->getSourceModel()->getConfig();
+        }
+
+        $response = new JsonResponse(
+            [
+                "sources" => $sources
+            ]
+        );
         $response->setEncodingOptions(JSON_UNESCAPED_SLASHES);
 
         return $response;

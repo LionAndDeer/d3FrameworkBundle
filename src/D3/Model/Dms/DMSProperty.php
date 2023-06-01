@@ -3,7 +3,7 @@
 
 namespace Liondeer\Framework\D3\Model\Dms;
 
-
+#[\Attribute]
 class DMSProperty
 {
     private string $key;

@@ -286,6 +286,22 @@ class DMS
 //
 //        return $fileName;
 //    }
+    public function getDocumentCategories(string $authToken, string $baseUri, string $tenantId)
+    {
+        $this->setHeaders($authToken);
+        $repoId = $this->getRepositoryId($baseUri, $authToken);
+        $response = $this->client->request('GET', $baseUri.'/dmsconfig/r/'.$repoId.'/objectmanagement/categories/', ['headers' => $this->headers]);
+        $categories = json_decode($response->getContent())->_embedded->categories;
+        return $categories;
+    }
+
+    public function getPropertiesToCategory(string $categorieId, string $baseUrl, $authToken) {
+        $this->setHeaders($authToken);
+        $repoId = $this->getRepositoryId($baseUrl, $authToken);
+        $response = $this->client->request('GET', $baseUrl.'/dmsconfig/r/'.$repoId.'/objectmanagement/categories/'.$categorieId.'/properties', ['headers' => $this->headers]);
+        $content = json_decode($response->getContent());
+        return $content->_embedded->properties;
+    }
 
     private function getFilenameFromResponseHeaders(array $headers): ?string
     {
