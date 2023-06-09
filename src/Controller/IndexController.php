@@ -192,7 +192,9 @@ class IndexController extends AbstractController
     {
         $sources =  [];
         foreach ($this->sourceControllers as $sourceController) {
-            $sources[] = $sourceController->getSourceModel()->getConfig();
+            foreach ($sourceController->getSourceModels() as $sourceModel) {
+                $sources[] = $sourceModel->getConfig();
+            }
         }
 
         $response = new JsonResponse(

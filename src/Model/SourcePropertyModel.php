@@ -6,12 +6,11 @@ namespace Liondeer\Framework\Model;
 class SourcePropertyModel
 {
     public function __construct(
-        private string $key,
-        private string $displayName
-    )
-    {
 
-    }
+        private array $categories  = [],
+        private string $key = '',
+        private string $displayName = '',
+    ){}
 
 
     /**
@@ -49,6 +48,25 @@ class SourcePropertyModel
         $this->displayName = $displayName;
         return $this;
     }
+
+    /**
+     * @return array
+     */
+    public function getCategories(): array
+    {
+        return $this->categories;
+    }
+
+    /**
+     * @param array $categories
+     * @return SourcePropertyModel
+     */
+    public function setCategories(array $categories): SourcePropertyModel
+    {
+        $this->categories = $categories;
+        return $this;
+    }
+
 
     public function getConfig(): array
     {

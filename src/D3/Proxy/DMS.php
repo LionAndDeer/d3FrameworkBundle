@@ -47,6 +47,22 @@ class DMS
 
         return "";
     }
+    public function getDocumentCategories(string $authToken, string $baseUri, string $tenantId)
+    {
+        $this->setHeaders($authToken);
+        $repoId = $this->getRepositoryId($baseUri, $authToken);
+        $response = $this->client->request('GET', $baseUri.'/dmsconfig/r/'.$repoId.'/objectmanagement/categories/', ['headers' => $this->headers]);
+        $categories = json_decode($response->getContent())->_embedded->categories;
+        return $categories;
+    }
+
+    public function getPropertiesToCategory(string $categorieId, string $baseUrl, $authToken) {
+        $this->setHeaders($authToken);
+        $repoId = $this->getRepositoryId($baseUrl, $authToken);
+        $response = $this->client->request('GET', $baseUrl.'/dmsconfig/r/'.$repoId.'/objectmanagement/categories/'.$categorieId.'/properties', ['headers' => $this->headers]);
+        $content = json_decode($response->getContent());
+        return $content->_embedded->properties;
+    }
 
     private function setHeaders(string $authToken, ?string $acceptHeader = 'application/hal+json')
     {
@@ -93,7 +109,7 @@ class DMS
     ): array {
         $this->setHeaders($authToken);
         $repositoryId = $this->getRepositoryId($baseUri, $authToken);
-        $response = $this->client->request(
+        $response =  $this->client->request(
             'POST',
             $baseUri . '/dms/r/' . $repositoryId . '/blob/chunk/',
             [
@@ -112,6 +128,7 @@ class DMS
                 'body' => $dmsObject->serialize(),
             ]
         );
+        $content = $response->getContent(false);
         $contentLocationUri = $response->getHeaders()['location'][0];
         preg_match('%o2m/(.*)\?sourceid%', $contentLocationUri, $matches);
         $dmsObjectId = $matches[1];
@@ -120,7 +137,8 @@ class DMS
         return [
             'contentLocationUri' => $contentLocationUri,
             'dmsObjectId' => $dmsObjectId,
-            'documentUrl' => $documentUrl
+            'documentUrl' => $documentUrl,
+            'repositoryId' =>$repositoryId,
         ];
     }
 
@@ -286,22 +304,6 @@ class DMS
 //
 //        return $fileName;
 //    }
-    public function getDocumentCategories(string $authToken, string $baseUri, string $tenantId)
-    {
-        $this->setHeaders($authToken);
-        $repoId = $this->getRepositoryId($baseUri, $authToken);
-        $response = $this->client->request('GET', $baseUri.'/dmsconfig/r/'.$repoId.'/objectmanagement/categories/', ['headers' => $this->headers]);
-        $categories = json_decode($response->getContent())->_embedded->categories;
-        return $categories;
-    }
-
-    public function getPropertiesToCategory(string $categorieId, string $baseUrl, $authToken) {
-        $this->setHeaders($authToken);
-        $repoId = $this->getRepositoryId($baseUrl, $authToken);
-        $response = $this->client->request('GET', $baseUrl.'/dmsconfig/r/'.$repoId.'/objectmanagement/categories/'.$categorieId.'/properties', ['headers' => $this->headers]);
-        $content = json_decode($response->getContent());
-        return $content->_embedded->properties;
-    }
 
     private function getFilenameFromResponseHeaders(array $headers): ?string
     {
