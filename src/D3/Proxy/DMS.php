@@ -100,7 +100,7 @@ class DMS
      * @throws RedirectionExceptionInterface
      * @throws TransportExceptionInterface
      */
-    #[ArrayShape(['contentLocationUri' => "string", 'dmsObjectId' => "mixed", 'documentUrl' => "string"])]
+    #[ArrayShape(['Success' => "bool",'contentLocationUri' => "string", 'dmsObjectId' => "mixed", 'documentUrl' => "string",'repositoryId' =>"string",])]
     public function createDmsEntry(
         DMSObject $dmsObject,
         string $fileContents,
@@ -129,12 +129,23 @@ class DMS
             ]
         );
         $content = $response->getContent(false);
-        $contentLocationUri = $response->getHeaders()['location'][0];
+        try {
+            $contentLocationUri = $response->getHeaders()['location'][0];
+        }catch (\Exception $exception){
+            return [
+                'Success' => false,
+                'Exception'=> $exception,
+                'Content' => $content,
+                'repositoryId' =>$repositoryId,
+                ];
+        }
+
         preg_match('%o2m/(.*)\?sourceid%', $contentLocationUri, $matches);
         $dmsObjectId = $matches[1];
         $documentUrl = $baseUri . $this->getImageLocation($dmsObjectId, $baseUri, $authToken);
 
         return [
+            'Success' => true,
             'contentLocationUri' => $contentLocationUri,
             'dmsObjectId' => $dmsObjectId,
             'documentUrl' => $documentUrl,

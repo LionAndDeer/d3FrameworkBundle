@@ -47,7 +47,7 @@ class SourceCategoryModel
     public function getConfig(): array
     {
         return  [
-            'key'  => $this->key,
+                        'key'  => $this->key,
             'displayName'  => $this->displayName
         ];
     }
