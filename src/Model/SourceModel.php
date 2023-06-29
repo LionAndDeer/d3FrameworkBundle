@@ -86,8 +86,8 @@ class SourceModel
 
     public function addSourceCategory(SourceCategoryModel $sourceCategoryModel): SourceModel
     {
-        $this->sourceCategoryModels[] = $sourceCategoryModel;
-        return $this;
+                        $this->sourceCategoryModels[] = $sourceCategoryModel;
+                        return $this;
     }
 
     public function addSourceProperty(SourcePropertyModel $sourcePropertyModel): SourceModel
@@ -96,7 +96,7 @@ class SourceModel
         return $this;
     }
 
-    public function getConfig(): array
+        public function getConfig(): array
     {
         $categories = [];
         foreach ($this->sourceCategoryModels as $sourceCategoryModel) {

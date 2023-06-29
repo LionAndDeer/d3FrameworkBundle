@@ -4,28 +4,40 @@ namespace Liondeer\Framework\Controller;
 
 use Liondeer\Framework\D3\Manager\Dms\SourceManager;
 use Liondeer\Framework\Model\SourceModel;
-use \Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 abstract class AbstractSourceController
-    extends  AbstractController
+    extends AbstractController
     implements AbstractSourceControllerInterface
 {
-    protected   SourceModel $sourceModel;
-    protected   array $annotatedModels;
+    /* @var SourceModel[] $sourceModels */
+    protected array $sourceModels = [];
+    protected array $annotatedModels;
     protected SourceManager $sourceManager;
 
     public function __construct(
         SourceManager $sourceManager
-    ) {
+    )
+    {
         $this->sourceManager = $sourceManager;
     }
 
-    public function getSourceModel(): SourceModel
+    /** @return SourceModel[] */
+    public function getSourceModels(): array
     {
         $this->defineSource();
-        $sourceModel = $this->sourceModel;
 
-        $sourceModel->setSourcePropertyModels($this->sourceManager->getSourcePropertyModels($this->annotatedModels));
-        return $sourceModel;
+        $sourceModels = [];
+        foreach ($this->sourceModels as $sourceModel) {
+            $categories = [];
+            foreach ($sourceModel->getSourceCategoryModels() as $sourceCategoryModel) {
+                $categories[] = $sourceCategoryModel->getKey();
+            }
+
+            $sourceModel->setSourcePropertyModels($this->sourceManager->getSourcePropertyModels($this->annotatedModels, $categories));
+
+            $sourceModels[] = $sourceModel;
+        }
+        return $sourceModels;
     }
 }

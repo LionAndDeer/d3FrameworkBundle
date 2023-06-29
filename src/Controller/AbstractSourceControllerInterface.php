@@ -7,5 +7,5 @@ use Liondeer\Framework\Model\SourceModel;
 interface AbstractSourceControllerInterface
 {
     public function defineSource();
-    public function getSourceModel(): SourceModel;
+    public function getSourceModels(): array;
 }

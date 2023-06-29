@@ -8,7 +8,7 @@ class DMSObject
     private string $filename;
     private string $sourceCategory;
     private string $sourceId;
-    private string $alterationText;
+    private string $alterationText = '';
     private string $contentLocationUri;
     private DMSSourceProperties $sourceProperties;
 
