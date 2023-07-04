@@ -1,6 +1,6 @@
 <?php
 
-namespace Liondeer\Framework\Model\HttpGateway;
+namespace Liondeer\Framework\D3\Model\HttpGateway;
 
 class AppModel
 {
