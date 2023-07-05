@@ -13,7 +13,8 @@ jobs:
         with:
           bump_version_scheme: minor
           tag_prefix: v
-          release_name: "Release <RELEASE_VERSION>"
+          release_name: "Release ${{ github.ref }}"
+          tag_name: ${{ github.ref }}
           release_body: false
           
       - name: Check Output Parameters
