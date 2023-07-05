@@ -1,7 +1,7 @@
 # d3FrameworkBundle
 
 
-Add the content of the extra block to your composer.json to use our recipe
+Add the content of the extra block to your composer.json to use our recipe:
 ```json
 {
   "extra": {
