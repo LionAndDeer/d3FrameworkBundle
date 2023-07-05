@@ -13,7 +13,7 @@ jobs:
         with:
           bump_version_scheme: minor
           tag_prefix: v
-          release_name: "Release v1.1.2"
+          release_name: "Release <RELEASE_VERSION>"
           release_body: false
           
       - name: Check Output Parameters
