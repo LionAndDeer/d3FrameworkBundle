@@ -1,5 +1,5 @@
 # d3FrameworkBundle
-
+Version 1.1
 
 Add the content of the extra block to your composer.json to use our recipe
 ```json
