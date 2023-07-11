@@ -2,8 +2,8 @@
 
 namespace Liondeer\Framework\D3\Proxy\HttpGateway;
 
-use Liondeer\Framework\Model\AppModel;
-use Liondeer\Framework\Model\SubscribedAppsModel;
+use Liondeer\Framework\D3\Model\HttpGateway\AppModel;
+use Liondeer\Framework\D3\Model\HttpGateway\SubscribedAppsModel;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class SubscribedAppsProxy
