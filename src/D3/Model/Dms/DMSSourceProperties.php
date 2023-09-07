@@ -21,16 +21,13 @@ class DMSSourceProperties
 
     public function addOrUpdateProperty(string $key, array $values): self
     {
+        $prevValues = $this->properties->get($key) ? $this->properties->get($key)->getValues() : [];
         $prop = new DMSProperty();
         $prop
             ->setKey($key)
-            ->addValues($values);
+            ->addValues([...$values, ...$prevValues]);
 
-        if ($this->properties->containsKey($key)) {
-            $this->properties->set($key, $prop->getValues());
-            return $this;
-        }
-        $this->properties->add($prop);
+        $this->properties->set($key, $prop);
         return $this;
     }
 
