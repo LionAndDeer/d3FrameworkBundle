@@ -196,7 +196,7 @@ class IndexController extends AbstractController
                 $sources[] = $sourceModel->getConfig();
             }
         }
-
+        
         $response = new JsonResponse(
             [
                 "sources" => $sources
