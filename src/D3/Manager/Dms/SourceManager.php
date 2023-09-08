@@ -52,7 +52,7 @@ class SourceManager
                         /** @var SourcePropertyModel $sourceProperty */
                         $sourceProperty = $attribute->newInstance();
                         if (!empty(array_intersect($sourceProperty->getCategories(), $categories))) {
-                            if (!empty($property->getValue($object))) {
+                            if (!empty($property->getValue($object)) || $property->getValue($object) === '0') {
                                 $value = $property->getValue($object);
                                 if ($value instanceof \DateTime){
                                     /** @var \DateTime $value */
