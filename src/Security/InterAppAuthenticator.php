@@ -103,7 +103,7 @@ class InterAppAuthenticator extends AbstractAuthenticator
         /** @var User $user */
         if (
             $user->getTenantId() === $tenant
-            && $sha === $signature
+            && hash_equals($sha, $signature)
         ) {
             return true;
         }
