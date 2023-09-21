@@ -353,7 +353,7 @@ class DMS
             $string = trim($string, '/');
             $result .= '/' . $string;
         }
-        $result = preg_replace('#/http#', 'http', $result);
+        $result = preg_replace('#^/http#', 'http', $result);
         return $result;
     }
 }
