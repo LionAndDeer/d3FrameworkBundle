@@ -2,6 +2,8 @@
 
 namespace Liondeer\Framework\D3\Proxy;
 
+use App\Controller\OutgoingInvoiceSourceController;
+use App\Manager\D3\OutgoingInvoicesDmsManager;
 use JetBrains\PhpStorm\ArrayShape;
 use Liondeer\Framework\D3\Model\Dms\DMSObject;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
@@ -137,7 +139,7 @@ class DMS
                 'Exception'=> $exception,
                 'Content' => $content,
                 'repositoryId' =>$repositoryId,
-                ];
+            ];
         }
 
         preg_match('%o2m/(.*)\?sourceid%', $contentLocationUri, $matches);
@@ -323,5 +325,35 @@ class DMS
         preg_match("/filename\*?=[^']*''[^'(]*\(?([^;]*)\).(.*)/", $dispositionHeader, $matches);
 
         return $matches[1].'.'.$matches[2];
+    }
+
+    public function getMappingForSource(
+        string $baseUrl,
+        string $authToken,
+        string $sourceId,
+    )
+    {
+        $repositoryId = $this->getRepositoryId($baseUrl, $authToken);
+        $this->setHeaders($authToken);
+        $response = $this->client->request(
+            'GET',
+            $this->concatenateUrl($baseUrl, 'dms', 'r', $repositoryId, 'm').  '?sourceId=/' . urlencode(($sourceId)),
+            [
+                'headers' => $this->headers + ['Accept' => 'application/hal+json'],
+            ]
+        );
+
+        return   json_decode($response->getContent(), true);
+    }
+
+    public function concatenateUrl(...$strings): string
+    {
+        $result = '';
+        foreach ($strings as $string) {
+            $string = trim($string, '/');
+            $result .= '/' . $string;
+        }
+        $result = preg_replace('#/http#', 'http', $result);
+        return $result;
     }
 }
