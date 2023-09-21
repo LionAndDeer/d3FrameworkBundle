@@ -7,6 +7,7 @@ use App\Security\User;
 use App\Security\UserHelper;
 use JetBrains\PhpStorm\ArrayShape;
 
+use PHPUnit\Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,30 +25,36 @@ class InterAppAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
         private ParameterBagInterface $params,
-        private UserHelper $identityProviderService
+        private UserHelper $identityProviderService,
+        private InterAppProvider    $interAppProvider,
     ) {
     }
 
     public function authenticate(Request $request): Passport
     {
-        $credentials = $this->getCredentials($request);
+        try {
+            $credentials = $this->getCredentials($request);
+            if(!isset($credentials['authSessionId'])) {
+                throw new AuthenticationException();
+            }
 
+            $interAppUser = $this->interAppProvider->loadUserByIdentifier($credentials['authSessionId']);
+            $credentialsValid = $this->checkCredentials($credentials, $interAppUser);
+        } catch (Exception $exception) {
+            throw new AuthenticationException();
+        }
+
+        if (!$credentialsValid) {
+            throw new AuthenticationException();
+        }
         return new SelfValidatingPassport(
-            new UserBadge($credentials['authSession']),
+            new UserBadge($credentials['authSessionId']),
         );
     }
 
     public function supports(Request $request): bool
     {
-        if (
-            $request->headers->has('x-dv-tenant-id')
-            && $request->headers->has('x-dv-baseuri')
-            && $request->headers->has('x-dv-sig-1')
-        ) {
-            return true;
-        }
-
-        return false;
+        return true;
     }
 
     #[ArrayShape([
@@ -69,7 +76,7 @@ class InterAppAuthenticator extends AbstractAuthenticator
             'd3TenantId' => $request->headers->get('x-dv-tenant-id'),
             'd3BaseUri' => $request->headers->get('x-dv-baseuri'),
             'd3Signature' => $request->headers->get('x-dv-sig-1'),
-            'authSession' => $authSession
+            'authSessionId' => $authSession
         ];
     }
 
@@ -103,7 +110,7 @@ class InterAppAuthenticator extends AbstractAuthenticator
         /** @var User $user */
         if (
             $user->getTenantId() === $tenant
-            && $sha === $signature
+            && hash_equals($sha, $signature)
         ) {
             return true;
         }
