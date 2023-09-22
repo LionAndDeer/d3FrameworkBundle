@@ -30,7 +30,7 @@ class InterAppAuthenticator extends AbstractAuthenticator
     ) {
     }
 
-    protected function authenticate(Request $request): Passport
+    public function authenticate(Request $request): Passport
     {
         try {
             $credentials = $this->getCredentials($request);
