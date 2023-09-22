@@ -24,13 +24,13 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 class InterAppAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
-        private ParameterBagInterface $params,
-        private UserHelper $identityProviderService,
-        private InterAppProvider    $interAppProvider,
+        protected ParameterBagInterface $params,
+        protected UserHelper $identityProviderService,
+        protected InterAppProvider    $interAppProvider,
     ) {
     }
 
-    public function authenticate(Request $request): Passport
+    protected function authenticate(Request $request): Passport
     {
         try {
             $credentials = $this->getCredentials($request);
@@ -63,7 +63,7 @@ class InterAppAuthenticator extends AbstractAuthenticator
         'd3Signature' => "null|string",
         'authSession' => "null|string"
     ])]
-    private function getCredentials(
+    protected function getCredentials(
         Request $request
     ): array {
         $authSession = '';
