@@ -25,13 +25,16 @@ use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Exception;
+use App\Security\CheckTenantManager;
 
 class D3UserAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
         private D3UserProvider        $userProvider,
-        private ParameterBagInterface $params
-    ) {
+        private ParameterBagInterface $params,
+        private CheckTenantManager    $checkTenantManager,
+    )
+    {
     }
 
     public function supports(Request $request): bool
@@ -53,6 +56,11 @@ class D3UserAuthenticator extends AbstractAuthenticator
     {
         try {
             $credentials = $this->getCredentials($request);
+
+            if (false === $this->checkTenantManager->isTenantValid($credentials['d3TenantId'])) {
+                throw new AuthenticationException();
+            }
+
             if ($request->headers->has('authorization')) {
                 $credentials['authSessionId'] = explode(' ', $request->headers->get('authorization'))[1];
             }
@@ -72,7 +80,7 @@ class D3UserAuthenticator extends AbstractAuthenticator
         }
 
         return new SelfValidatingPassport(
-            new UserBadge($user->getUserIdentifier(), function() use ($user) {
+            new UserBadge($user->getUserIdentifier(), function () use ($user) {
                 return $user;
             }),
         );
@@ -105,7 +113,8 @@ class D3UserAuthenticator extends AbstractAuthenticator
         'd3Signature' => "null|string",
         'authSession' => "null|string"
     ])]
-    private function getCredentials(Request $request    ): array {
+    private function getCredentials(Request $request): array
+    {
         $authSession = '';
 
         if (!empty($request->headers->get('authorization'))) {
@@ -120,7 +129,8 @@ class D3UserAuthenticator extends AbstractAuthenticator
         ];
     }
 
-    public function checkCredentials($credentials, UserInterface $user): bool {
+    public function checkCredentials($credentials, UserInterface $user): bool
+    {
         $tenant = $credentials['d3TenantId'];
         $baseuri = $credentials['d3BaseUri'];
         $signature = $credentials['d3Signature'];
