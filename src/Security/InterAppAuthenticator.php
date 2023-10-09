@@ -3,6 +3,7 @@
 
 namespace Liondeer\Framework\Security;
 
+use App\Security\CheckTenantManager;
 use App\Security\User;
 use App\Security\UserHelper;
 use JetBrains\PhpStorm\ArrayShape;
@@ -26,6 +27,7 @@ class InterAppAuthenticator extends AbstractAuthenticator
         protected ParameterBagInterface $params,
         protected UserHelper $identityProviderService,
         protected InterAppProvider    $interAppProvider,
+        protected CheckTenantManager    $checkTenantManager,
     ) {
     }
 
