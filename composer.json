@@ -21,7 +21,8 @@
     "symfony/serializer": "^6.2.1",
     "symfony/translation": "^6.2.1",
     "symfony/twig-bundle": "^6.2.1",
-    "symfony/yaml": "^6.2.1"
+    "symfony/yaml": "^6.2.1",
+    "symfony/monolog-bundle": "^3.8"
   },
   "require-dev": {
     "symfony/stopwatch": "^6.2.1",
