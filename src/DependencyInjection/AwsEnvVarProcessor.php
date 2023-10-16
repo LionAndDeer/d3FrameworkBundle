@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DependencyInjection;
+namespace Liondeer\Framework\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\EnvVarProcessorInterface;
 
