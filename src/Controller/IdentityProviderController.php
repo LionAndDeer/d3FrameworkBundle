@@ -3,7 +3,7 @@
 namespace Liondeer\Framework\Controller;
 
 use Exception;
-use Liondeer\Framework\IdentityProvider\InterAppProxy;
+use Liondeer\Framework\D3\Proxy\IdentityProvider\InterAppProxy;
 use Psr\Cache\InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

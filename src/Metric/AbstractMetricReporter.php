@@ -4,10 +4,10 @@ namespace Liondeer\Framework\Metric;
 
 use Exception;
 use Liondeer\Framework\Exception\LiondeerD3FrameworkException;
-use Liondeer\Framework\IdentityProvider\InterAppProxy;
+use Liondeer\Framework\D3\Proxy\IdentityProvider\InterAppProxy;
 use Liondeer\Framework\D3\Model\Metric;
 use Liondeer\Framework\D3\Model\MetricReponse;
-use Liondeer\Framework\D3\Model\Tenant;
+use Liondeer\Framework\Model\Tenant;
 use Psr\Cache\InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\HttpClient;

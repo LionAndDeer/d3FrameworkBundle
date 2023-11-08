@@ -6,7 +6,6 @@ namespace Liondeer\Framework\Security;
 use App\Security\User;
 use App\Security\UserHelper;
 use JetBrains\PhpStorm\ArrayShape;
-
 use PHPUnit\Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,7 +24,7 @@ class InterAppAuthenticator extends AbstractAuthenticator
 {
     public function __construct(
         protected ParameterBagInterface $params,
-        protected UserHelper            $identityProviderService,
+        protected UserHelper $identityProviderService,
         protected InterAppProvider    $interAppProvider,
     ) {
     }
@@ -34,6 +33,11 @@ class InterAppAuthenticator extends AbstractAuthenticator
     {
         try {
             $credentials = $this->getCredentials($request);
+
+            if (false === $this->checkTenantManager->isTenantValid($credentials['d3TenantId'])) {
+                throw new AuthenticationException();
+            }
+
             if(!isset($credentials['authSessionId'])) {
                 throw new AuthenticationException();
             }

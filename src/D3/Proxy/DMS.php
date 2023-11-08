@@ -337,7 +337,7 @@ class DMS
         $this->setHeaders($authToken);
         $response = $this->client->request(
             'GET',
-            $this->concatenateUrl($baseUrl, 'dms', 'r', $repositoryId, 'm').  '?sourceId=/' . urlencode(($sourceId)),
+            $this->concatenateUrl($baseUrl, 'dms', 'r', $repositoryId, 'm').  '?sourceId=' . urlencode(($sourceId)),
             [
                 'headers' => $this->headers + ['Accept' => 'application/hal+json'],
             ]
