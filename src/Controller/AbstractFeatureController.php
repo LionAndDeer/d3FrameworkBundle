@@ -17,11 +17,11 @@ abstract class AbstractFeatureController
     ) {
     }
 
-    public function getFeatureModel(): FeatureModel
+    public function getFeatureModel(): ?FeatureModel
     {
         $this->defineFeature();
 
-        return $this->featureModel;
+        return empty($this->featureModel) ? null : $this->featureModel;
     }
 
 

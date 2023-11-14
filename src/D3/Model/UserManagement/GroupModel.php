@@ -21,6 +21,13 @@ class GroupModel
 
     public function __construct(string $data = null)
     {
+        $normalizers = [
+            new ArrayDenormalizer(),
+            new ObjectNormalizer(propertyTypeExtractor: new ReflectionExtractor())
+        ];
+        $encoders = [new JsonEncoder()];
+
+        $this->serializer = new Serializer($normalizers, $encoders);
         if (!empty($data)) {
             $this->deserialize($data);
         }
@@ -28,16 +35,14 @@ class GroupModel
 
     private function deserialize(string $data): self
     {
-        $normalizers = [
-            new ArrayDenormalizer(),
-            new ObjectNormalizer(propertyTypeExtractor: new ReflectionExtractor())
-        ];
-        $encoders = [new JsonEncoder()];
-
-        $serializer = new Serializer($normalizers, $encoders);
-        $serializer->deserialize($data, GroupModel::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $this]);
+        $this->serializer->deserialize($data, GroupModel::class, 'json', [AbstractNormalizer::OBJECT_TO_POPULATE => $this]);
 
         return new $this;
+    }
+
+    public function serialize(string $format)
+    {
+        return $this->serializer->serialize($this, $format);
     }
 
     /**

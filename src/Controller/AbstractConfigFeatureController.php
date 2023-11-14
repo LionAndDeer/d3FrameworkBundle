@@ -14,12 +14,12 @@ abstract class AbstractConfigFeatureController
     protected TranslatorInterface $translator;
 
     /**
-     * @return ConfigFeatureModel
+     * @return ?ConfigFeatureModel
      */
-    public function getConfigFeatureModel(): ConfigFeatureModel
+    public function getConfigFeatureModel(): ?ConfigFeatureModel
     {
         $this->defineConfigFeature();
-        return $this->configFeatureModel;
+        return empty($this->configFeatureModel) ? null : $this->configFeatureModel;
     }
 
     /**

@@ -87,6 +87,10 @@ class IndexController extends AbstractController
             /** @var AbstractFeatureController $featureController */
             $featureModel = $featureController->getFeatureModel();
 
+            if (empty($featureModel)) {
+                continue;
+            }
+
             $granted = false;
             foreach ($featureModel->getAuthorizedRoles() as $authorizedRole) {
                 if (
@@ -135,8 +139,11 @@ class IndexController extends AbstractController
         /** @var AbstractConfigFeatureController $configFeatureController */
         foreach ($this->configFeatureControllers as $configFeatureController) {
             $configFeatureHeadlineModel = $configFeatureController
-                ->getConfigFeatureModel()
-                ->getConfigFeatureHeadlineModel();
+                ->getConfigFeatureModel();
+            if (empty($configFeatureHeadlineModel)) {
+                continue;
+            }
+            $configFeatureHeadlineModel = $configFeatureHeadlineModel->getConfigFeatureHeadlineModel();
             $configFeatureHeadlineModel->defineConfigFeatureHeadline();
             $configFeatureHeadlineModels[$configFeatureHeadlineModel->getName()] = $configFeatureHeadlineModel;
         }

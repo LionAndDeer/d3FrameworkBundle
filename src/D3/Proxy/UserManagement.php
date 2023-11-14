@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\HttpClient\ResponseInterface;
 
 class UserManagement
 {
@@ -53,4 +54,25 @@ class UserManagement
         return $userlist;
     }
 
+    public function createGroup(string $accessToken, string $baseUri, \Liondeer\Framework\D3\Model\UserManagement\GroupModel $groupModel): ResponseInterface
+    {
+        try {
+            $response = $this->httpClient->request(
+                'POST',
+                $baseUri . '/usermanagement/group',
+                [
+                    'headers' => [
+                        'authorization' => 'Bearer ' . $accessToken,
+                        'accept' => 'application/json',
+                        'content-Type' => 'application/json',
+                    ],
+                    'body' => $groupModel->serialize('json')
+                ]
+            );
+        } catch (Exception $exception) {
+            $this->logger->error($exception->getMessage());
+        }
+
+        return $response;
+    }
 }
