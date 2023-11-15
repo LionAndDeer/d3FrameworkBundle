@@ -10,5 +10,5 @@ interface AbstractConfigFeatureControllerInterface
 {
     public function defineConfigFeature();
 
-    public function getConfigFeatureModel(): ?ConfigFeatureModel;
+    public function getConfigFeatureModel(): ConfigFeatureModel;
 }

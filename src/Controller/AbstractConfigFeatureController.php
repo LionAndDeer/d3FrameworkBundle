@@ -16,10 +16,10 @@ abstract class AbstractConfigFeatureController
     /**
      * @return ?ConfigFeatureModel
      */
-    public function getConfigFeatureModel(): ?ConfigFeatureModel
+    public function getConfigFeatureModel(): ConfigFeatureModel
     {
         $this->defineConfigFeature();
-        return empty($this->configFeatureModel) ? null : $this->configFeatureModel;
+        return $this->configFeatureModel;
     }
 
     /**

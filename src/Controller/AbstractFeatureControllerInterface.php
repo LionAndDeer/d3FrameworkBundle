@@ -10,5 +10,5 @@ interface AbstractFeatureControllerInterface
 {
     public function defineFeature();
 
-    public function getFeatureModel(): ?FeatureModel;
+    public function getFeatureModel(): FeatureModel;
 }
