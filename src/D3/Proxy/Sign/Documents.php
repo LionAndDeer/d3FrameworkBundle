@@ -113,5 +113,25 @@ class Documents
         }
     }
 
+    public function downloadDocumentPerUploadLink(string $downloadLink): bool
+    {
+
+        $headers['Content-Type'] = 'application/x-www-form-urlencoded';
+
+        $response = $this->client->request(
+            'GET',
+            $downloadLink,
+            [
+                'headers' => $headers,
+            ]
+        );
+
+        if ($response->getStatusCode(false) === Response::HTTP_NOT_FOUND) {
+            return false;
+        } else {
+            return $response->getContent();
+        }
+    }
+
 }
 
