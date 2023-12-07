@@ -35,7 +35,7 @@ class DocumentManager
             $authToken,
             $documentId
         );
-        
+
         $uploadLink = ($documentModel->getLinks())['uploadLink']['href'];
 
         // Upload des Dokuments anhand des UploadLinks des SignObjekts
@@ -68,7 +68,6 @@ class DocumentManager
 
         // Kontrolle ob der Upload wirklich Stattgefunden hat
         if ($documentModel->getUploadDate()) {
-            fclose($documentStream);
             return $documentModel;
         }
 
