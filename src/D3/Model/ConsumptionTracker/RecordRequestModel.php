@@ -14,7 +14,7 @@ class RecordRequestModel
     private \DateTime $timeOfPerformance;
     private string $billedAggregation;
 
-    public function __construct(string $metricName)
+    public function __construct(string $metricName = '')
     {
         $this->metric = $metricName;
         $this->quantity = 1;
