@@ -22,6 +22,18 @@ class RecordRequestModel
         $this->billedAggregation = 'sum';
     }
 
+    public function getMetric(): string
+    {
+        return $this->metric;
+    }
+
+    public function setMetric(string $metric): RecordRequestModel
+    {
+        $this->metric = $metric;
+        return $this;
+    }
+
+
     public function getQuantity(): int
     {
         return $this->quantity;

@@ -25,7 +25,7 @@ class ConsumptionTrackerProxy
 
     }
 
-    public function getAuthSessionId(Tenant $tenant)
+    private function getAuthSessionId(Tenant $tenant)
     {
         try {
             return $this->identityProviderInterAppService->getSessionId($tenant);
