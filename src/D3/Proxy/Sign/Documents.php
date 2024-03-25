@@ -113,7 +113,7 @@ class Documents
         }
     }
 
-    public function downloadDocumentPerUploadLink(string $downloadLink): bool
+    public function downloadDocumentPerDownloadLink(string $downloadLink): bool
     {
 
         $headers['Content-Type'] = 'application/x-www-form-urlencoded';
